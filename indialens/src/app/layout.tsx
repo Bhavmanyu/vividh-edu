@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { StatsBar } from "@/components/StatsBar";
 import { Footer } from "@/components/Footer";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -49,11 +50,14 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Navbar />
-        <StatsBar />
-        <main style={{ paddingTop: 84 }}>{children}</main>
-        <Footer />
+        <PostHogProvider>
+          <Navbar />
+          <StatsBar />
+          <main style={{ paddingTop: 84 }}>{children}</main>
+          <Footer />
+        </PostHogProvider>
       </body>
     </html>
   );
 }
+
