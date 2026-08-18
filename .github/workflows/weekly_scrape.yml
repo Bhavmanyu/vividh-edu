@@ -1,0 +1,230 @@
+name: Weekly Data Scrape Pipeline
+
+on:
+  schedule:
+    - cron: '30 20 * * 6'  # 02:00 IST Sunday
+  workflow_dispatch:  # allow manual trigger
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (no DB writes)'
+        type: boolean
+        default: false
+
+jobs:
+  # --- Parallel scraper jobs ---
+  scrape-worldbank:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.worldbank_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-plfs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.plfs_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-nirf:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.nirf_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-payscale:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.payscale_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-naukri:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.naukri_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-internshala:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.internshala_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-indeed:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.indeed_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-reddit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.reddit_scraper --limit 50 ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USER_AGENT: 'IndiaLens/1.0 by u/indialens_bot'
+
+  scrape-placement:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.college_placement_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-jina:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.jina_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  scrape-tavily:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python -m scrapers.tavily_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+  scrape-crawl4ai:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: crawl4ai-setup  # download browser binaries
+      - run: python -m scrapers.crawl4ai_scraper ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  # --- Post-scrape: Anomaly detection + ROI recompute ---
+  post-scrape:
+    needs: [scrape-worldbank, scrape-plfs, scrape-nirf, scrape-payscale, scrape-naukri, scrape-internshala, scrape-indeed, scrape-reddit, scrape-placement, scrape-jina, scrape-tavily, scrape-crawl4ai]
+    if: always()  # run even if some scrapers fail
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger ROI recompute
+        run: |
+          curl -X POST "$API_BASE/api/v1/admin/recompute-roi" \
+            -H "X-API-KEY: $API_KEY_ADMIN" \
+            -H "Content-Type: application/json" \
+            --fail --silent --show-error
+        env:
+          API_BASE: ${{ secrets.API_BASE_URL }}
+          API_KEY_ADMIN: ${{ secrets.API_KEY_ADMIN }}
+      - name: Notify on failure
+        if: failure()
+        run: echo "Weekly scrape pipeline had failures. Check GitHub Actions logs."

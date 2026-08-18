@@ -1,0 +1,59 @@
+# IndiaLens Backend — Python Dependencies
+
+# ── FastAPI core ──────────────────────────────────────────────────
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.2
+pydantic-settings==2.4.0
+
+# ── Database ──────────────────────────────────────────────────────
+sqlalchemy[asyncio]==2.0.35
+asyncpg==0.29.0        # async postgres driver (used by SQLAlchemy async)
+psycopg2-binary==2.9.9 # sync postgres driver (used by Airflow + scripts)
+alembic==1.13.2        # migrations
+
+# ── HTTP client ───────────────────────────────────────────────────
+httpx==0.27.2
+aiohttp==3.10.5
+
+# ── HTML parsing ─────────────────────────────────────────────────
+beautifulsoup4==4.12.3
+lxml==5.3.0
+pdfminer.six==20231228     # college placement PDF extraction
+fake-useragent==1.5.1      # scraper user-agent rotation
+
+# ── Reddit ───────────────────────────────────────────────────────
+praw==7.7.1
+
+# ── NLP / ML — Week 3 ────────────────────────────────────────────
+scikit-learn==1.5.2
+xgboost==2.1.1
+numpy==1.26.4
+pandas==2.2.2
+shap==0.46.0                  # XGBoost feature explainability
+# PyTorch CPU-only (small footprint for dev; use cuda build in prod)
+torch==2.4.0                  # LSTM trajectory model
+transformers==4.44.0          # BERT NER salary extractor
+sentencepiece==0.2.0          # BERT tokenizer dependency
+
+# ── Airflow (installed separately in Dockerfile.airflow) ──────────
+# apache-airflow==2.10.0
+# apache-airflow-providers-redis
+# apache-airflow-providers-celery
+
+# ── Redis (cache invalidation) ────────────────────────────────────
+redis==5.0.8
+
+# ── Utilities ─────────────────────────────────────────────────────
+python-dotenv==1.0.1
+python-multipart==0.0.9   # for form data in FastAPI
+email-validator==2.2.0
+orjson==3.10.7             # fast JSON serialization
+structlog==24.4.0          # structured logging
+sentry-sdk==2.13.0         # error monitoring
+slowapi==0.1.9             # rate limiting
+
+# ── Smart Scraping Layer (free) ────────────────────────────────────
+tavily-python==0.5.0     # real-time AI search API (1000 free/month)
+crawl4ai==0.4.3          # JS-capable async crawler, handles anti-bot
+mangum==0.17.0           # Vercel/AWS Lambda adapter for FastAPI
