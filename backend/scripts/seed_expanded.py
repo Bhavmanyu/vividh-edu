@@ -331,29 +331,35 @@ async def seed_expanded():
                 "label": label,
             })
 
-            # Seed salary if we have it
+            # Seed salary trajectories (year 1, 5, 10, 20)
             salary_data = EXPANDED_SALARY.get((college_name, degree_name))
             if salary_data:
-                await session.execute(text("""
-                    INSERT INTO salary_trajectories
-                        (id, program_id, year_0, year_5, year_10, year_20,
-                         placement_rate_pct, source, created_at)
-                    VALUES
-                        (:id, :pid, :y0, :y5, :y10, :y20, :placement, :source, NOW())
-                    ON CONFLICT (program_id) DO UPDATE
-                        SET year_0=EXCLUDED.year_0, year_5=EXCLUDED.year_5,
-                            year_10=EXCLUDED.year_10, year_20=EXCLUDED.year_20,
-                            placement_rate_pct=EXCLUDED.placement_rate_pct
-                """), {
-                    "id": str(uuid.uuid4()),
-                    "pid": pid,
-                    "y0": salary_data["at_grad"],
-                    "y5": salary_data["y5"],
-                    "y10": salary_data["y10"],
-                    "y20": salary_data["y20"],
-                    "placement": salary_data["placement"],
-                    "source": "nirf_2024_verified" if not roi.get("preliminary") else "model_estimated",
-                })
+                source_str = "nirf_2024_verified" if not roi.get("preliminary") else "model_estimated"
+                points = [
+                    (1, salary_data["at_grad"]),
+                    (5, salary_data["y5"]),
+                    (10, salary_data["y10"]),
+                    (20, salary_data["y20"]),
+                ]
+                for yr, p50_val in points:
+                    p25 = int(p50_val * 0.82)
+                    p75 = int(p50_val * 1.25)
+                    await session.execute(text("""
+                        INSERT INTO salary_trajectories
+                            (id, program_id, model_version, year_number, p25_inr, p50_inr, p75_inr, data_source, computed_at)
+                        VALUES
+                            (:id, :pid, 'v1.0-seed', :yr, :p25, :p50, :p75, :source, NOW())
+                        ON CONFLICT (program_id, year_number) WHERE is_current = TRUE DO UPDATE
+                            SET p25_inr=EXCLUDED.p25_inr, p50_inr=EXCLUDED.p50_inr, p75_inr=EXCLUDED.p75_inr, data_source=EXCLUDED.data_source
+                    """), {
+                        "id": str(uuid.uuid4()),
+                        "pid": pid,
+                        "yr": yr,
+                        "p25": p25,
+                        "p50": p50_val,
+                        "p75": p75,
+                        "source": source_str,
+                    })
 
             inserted_programs += 1
 

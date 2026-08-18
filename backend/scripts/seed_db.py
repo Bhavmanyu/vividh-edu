@@ -101,7 +101,7 @@ async def seed():
                     "naac": col["naac_grade"], "est": col["established_year"],
                 })
             except Exception as e:
-                # Might already exist
+                await db.rollback()
                 result = await db.execute(
                     text("SELECT id FROM colleges WHERE short_name = :n"),
                     {"n": col["short_name"]},

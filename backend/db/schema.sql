@@ -37,7 +37,7 @@ CREATE TYPE feedback_status AS ENUM ('pending', 'accepted', 'rejected', 'merged'
 
 CREATE TABLE colleges (
   id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  short_name        VARCHAR(64) NOT NULL,
+  short_name        VARCHAR(64) NOT NULL UNIQUE,
   full_name         VARCHAR(256) NOT NULL,
   state             VARCHAR(64) NOT NULL,
   city              VARCHAR(64) NOT NULL,
@@ -63,12 +63,13 @@ CREATE INDEX idx_colleges_name_trgm ON colleges USING gin(full_name gin_trgm_ops
 
 CREATE TABLE degrees (
   id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  short_name        VARCHAR(64) NOT NULL,
+  short_name        VARCHAR(64) NOT NULL UNIQUE,
   full_name         VARCHAR(256) NOT NULL,
   field             degree_field NOT NULL,
   level             degree_level NOT NULL,
   duration_years    DECIMAL(3,1) NOT NULL,
-  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX idx_degrees_field ON degrees(field);

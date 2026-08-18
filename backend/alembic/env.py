@@ -47,7 +47,7 @@ raw_url = os.environ.get(
         "postgresql://indialens:indialens_dev@localhost:5432/indialens",
     ),
 )
-sync_url = _to_sync_url(raw_url)
+sync_url = _to_sync_url(raw_url).replace("%", "%%")
 config.set_main_option("sqlalchemy.url", sync_url)
 
 target_metadata = None
