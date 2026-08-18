@@ -41,7 +41,7 @@ export default function CollegeDetailPage() {
     return (
       <div style={{ padding: "80px 24px", textAlign: "center" }}>
         <p style={{ color: "#8B8BA7" }}>{error || "Program not found."}</p>
-        <Link href="/index" className="btn-primary mt-4 inline-flex">
+        <Link href="/explore" className="btn-primary mt-4 inline-flex">
           Back to Index
         </Link>
       </div>
@@ -94,7 +94,7 @@ export default function CollegeDetailPage() {
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8">
           <Link
-            href="/index"
+            href="/explore"
             style={{
               display: "flex",
               alignItems: "center",

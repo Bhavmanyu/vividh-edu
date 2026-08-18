@@ -118,7 +118,7 @@ export default function LandingPage() {
                 Find your ROI
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/index" className="btn-secondary" style={{ fontSize: 15, padding: "12px 24px" }}>
+              <Link href="/explore" className="btn-secondary" style={{ fontSize: 15, padding: "12px 24px" }}>
                 <BarChart2 size={14} />
                 Browse the Index
               </Link>
@@ -173,7 +173,7 @@ export default function LandingPage() {
               </h2>
             </div>
             <Link
-              href="/index"
+              href="/explore"
               style={{
                 display: "flex",
                 alignItems: "center",
