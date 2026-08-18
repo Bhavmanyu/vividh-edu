@@ -20,7 +20,7 @@ import { SalaryTrajectory } from "@/components/SalaryTrajectory";
 import { DataFreshnessBadge } from "@/components/DataFreshnessBadge";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
 import { CollegeCard } from "@/components/CollegeCard";
-import { MOCK_DATA, formatInr } from "@/lib/mock-data";
+import { MOCK_DATA, formatInr } from "../../../lib/mock-data";
 import { useCollege } from "@/hooks/useData";
 
 export default function CollegeDetailPage() {

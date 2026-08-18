@@ -5,7 +5,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { CollegeDegreeRecord } from "@/lib/mock-data";
+import type { CollegeDegreeRecord } from "../lib/mock-data";
 
 export interface CollegesQuery {
   page?: number;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Zap, ExternalLink } from "lucide-react";
-import { PLATFORM_STATS } from "@/lib/mock-data";
+import { PLATFORM_STATS } from "../lib/mock-data";
 
 export function Footer() {
   return (

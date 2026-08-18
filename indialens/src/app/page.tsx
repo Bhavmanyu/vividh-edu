@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { ScoreRing } from "@/components/ScoreRing";
 import { CollegeCard } from "@/components/CollegeCard";
-import { MOCK_DATA, PLATFORM_STATS, formatInr } from "@/lib/mock-data";
+import { MOCK_DATA, PLATFORM_STATS, formatInr } from "../lib/mock-data";
 
 export const metadata: Metadata = {
   title: "IndiaLens — Know the real return on your degree",

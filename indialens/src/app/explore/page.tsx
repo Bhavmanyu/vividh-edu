@@ -26,8 +26,8 @@ import {
 } from "lucide-react";
 import { ScoreRing } from "@/components/ScoreRing";
 import { DataFreshnessBadge } from "@/components/DataFreshnessBadge";
-import { formatInr, UNIQUE_FIELDS, UNIQUE_STATES, UNIQUE_TIERS } from "@/lib/mock-data";
-import type { CollegeDegreeRecord } from "@/lib/mock-data";
+import { formatInr, UNIQUE_FIELDS, UNIQUE_STATES, UNIQUE_TIERS } from "../../lib/mock-data";
+import type { CollegeDegreeRecord } from "../../lib/mock-data";
 import { useColleges } from "@/hooks/useData";
 
 

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ScoreRing } from "./ScoreRing";
 import { DataFreshnessBadge } from "./DataFreshnessBadge";
-import { formatInr } from "@/lib/mock-data";
-import type { CollegeDegreeRecord } from "@/lib/mock-data";
+import { formatInr } from "../lib/mock-data";
+import type { CollegeDegreeRecord } from "../lib/mock-data";
 import { TrendingUp, AlertTriangle, Users } from "lucide-react";
 
 interface CollegeCardProps {

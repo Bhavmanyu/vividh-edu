@@ -12,7 +12,7 @@ import { RiskGrid } from "@/components/RiskGrid";
 import { SalaryTrajectory } from "@/components/SalaryTrajectory";
 import { ReportSection } from "@/components/ReportSection";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
-import { MOCK_DATA, formatInr } from "@/lib/mock-data";
+import { MOCK_DATA, formatInr } from "../../../lib/mock-data";
 import { useState } from "react";
 import { useReport } from "@/hooks/useData";
 
