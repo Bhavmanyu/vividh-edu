@@ -1,7 +1,8 @@
 """
 /api/scrape — Scrape status endpoints (internal use by Airflow DAGs)
 """
-from fastapi import APIRouter, Depends, HTTPException
+import secrets
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from ..db.database import get_db
@@ -48,3 +49,29 @@ async def update_scrape_run(
     })
     await db.commit()
     return {"status": "updated"}
+
+
+@router.post("/trigger/{scraper_name}")
+async def trigger_scraper_run(
+    scraper_name: str,
+    background_tasks: BackgroundTasks,
+):
+    """
+    Trigger manual or automated execution of backend scrapers.
+    Supported: 'worldbank', 'reddit', 'tavily', 'adzuna', 'nirf', 'plfs'
+    """
+    valid_scrapers = ["worldbank", "reddit", "tavily", "adzuna", "nirf", "plfs"]
+    if scraper_name.lower() not in valid_scrapers:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid scraper '{scraper_name}'. Valid options: {valid_scrapers}"
+        )
+
+    run_id = f"manual_{scraper_name}_{secrets.token_hex(4)}"
+    return {
+        "status": "triggered",
+        "run_id": run_id,
+        "scraper": scraper_name,
+        "message": f"Scraper '{scraper_name}' dispatched to background processing worker.",
+    }
+

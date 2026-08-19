@@ -22,6 +22,8 @@ try:
 except ImportError:
     async def send_report_email(*args, **kwargs): return False
 
+from backend.services.tavily_auto_service import tavily_auto_service
+
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
@@ -341,6 +343,13 @@ async def analyze(
 
     # Non-blocking email (fire-and-forget via background task)
     top_rec = recommendations[0] if recommendations else {}
+    if top_rec and top_rec.get("collegeName"):
+        background_tasks.add_task(
+            tavily_auto_service.auto_trigger_for_college,
+            top_rec.get("collegeName"),
+            profile.target_field,
+        )
+
     email_addr = getattr(profile, 'email', None)
     if email_addr:
         background_tasks.add_task(

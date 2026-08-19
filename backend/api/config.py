@@ -40,6 +40,18 @@ class Settings(BaseSettings):
     # Model
     current_model_version: str = "v1.0-seed"
 
+    # External APIs
+    data_gov_in_api_key: str = ""
+    adzuna_app_id: str = ""
+    adzuna_app_key: str = ""
+    rapidapi_jsearch_key: str = ""
+    github_token: str = ""
+    tavily_api_key: str = ""
+
+    # AI Services
+    gemini_api_key: str = ""
+    hf_token: str = ""
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

@@ -12,6 +12,10 @@ import { RiskGrid } from "@/components/RiskGrid";
 import { SalaryTrajectory } from "@/components/SalaryTrajectory";
 import { ReportSection } from "@/components/ReportSection";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
+import JobMarketCard from "@/components/JobMarketCard";
+import EcosystemBadge from "@/components/EcosystemBadge";
+import PsychometricsRadar from "@/components/PsychometricsRadar";
+import AIAdvisorWidget from "@/components/AIAdvisorWidget";
 import { MOCK_DATA, formatInr } from "../../../lib/mock-data";
 import { useState } from "react";
 import { useReport } from "@/hooks/useData";
@@ -239,6 +243,18 @@ export default function ReportPage() {
               </div>
             ))}
           </ReportSection>
+
+          {/* Real-time Job Market Demand Telemetry */}
+          <JobMarketCard initialField="engineering-cs" initialCity="bengaluru" />
+
+          {/* Student Experience Psychometrics Radar */}
+          <PsychometricsRadar />
+
+          {/* GitHub Ecosystem & Wikidata Density */}
+          <EcosystemBadge universityName="IIT Bombay" />
+
+          {/* AI Career Advisor Live Consultation Widget */}
+          <AIAdvisorWidget initialBudget={20} initialField="engineering-cs" />
 
           {/* 2 — Top 5 Recommendations */}
           <ReportSection

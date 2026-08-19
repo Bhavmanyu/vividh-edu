@@ -20,6 +20,10 @@ import { SalaryTrajectory } from "@/components/SalaryTrajectory";
 import { DataFreshnessBadge } from "@/components/DataFreshnessBadge";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
 import { CollegeCard } from "@/components/CollegeCard";
+import JobMarketCard from "@/components/JobMarketCard";
+import EcosystemBadge from "@/components/EcosystemBadge";
+import PsychometricsRadar from "@/components/PsychometricsRadar";
+import AIAdvisorWidget from "@/components/AIAdvisorWidget";
 import { MOCK_DATA, formatInr } from "../../../lib/mock-data";
 import { useCollege } from "@/hooks/useData";
 
@@ -299,6 +303,21 @@ export default function CollegeDetailPage() {
                 </p>
               </div>
             </div>
+
+            {/* City Job Market Demand Telemetry */}
+            <JobMarketCard initialField={degree.field} initialCity="bengaluru" />
+
+            {/* Student Experience Psychometrics Radar */}
+            <PsychometricsRadar />
+
+            {/* GitHub & Wikidata Ecosystem Badge */}
+            <EcosystemBadge universityName={college.name} />
+
+            {/* AI Advisor Floating Consultation Widget */}
+            <AIAdvisorWidget
+              initialBudget={Math.round((costs?.totalCostOfDegreeInr || 1000000) / 100000)}
+              initialField={degree.field}
+            />
           </div>
 
           {/* Right: Risk grid + raw data + similar */}
