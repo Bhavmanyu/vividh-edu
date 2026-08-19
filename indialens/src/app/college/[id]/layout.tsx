@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { MOCK_DATA } from '@/lib/mock-data';
+import { MOCK_DATA } from '../../../lib/mock-data';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const record = MOCK_DATA.find(r => r.id === params.id);

@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { MOCK_DATA } from '@/lib/mock-data';
+import { MOCK_DATA } from '../lib/mock-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [

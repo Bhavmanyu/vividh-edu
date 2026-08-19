@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MOCK_DATA } from "@/lib/mock-data";
+import { MOCK_DATA } from "../../../lib/mock-data";
 
 const FASTAPI_BASE = process.env.FASTAPI_URL ?? "http://localhost:8000";
 
