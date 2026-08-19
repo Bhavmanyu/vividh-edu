@@ -48,9 +48,7 @@ export function Footer() {
               className="mt-4 text-xs font-mono"
               style={{ color: "#4A4A6A" }}
             >
-              {PLATFORM_STATS.collegesTracked} colleges ·{" "}
-              {(PLATFORM_STATS.dataPoints / 1000000).toFixed(1)}M data points ·
-              Updated weekly
+              {PLATFORM_STATS.collegesTracked} colleges · {PLATFORM_STATS.programsIndexed} programs indexed · Verified data
             </p>
           </div>
 
@@ -64,7 +62,7 @@ export function Footer() {
             </p>
             <div className="flex flex-col gap-2">
               {[
-                { href: "/index", label: "ROI Index" },
+                { href: "/explore", label: "ROI Index" },
                 { href: "/analyze", label: "Student Engine" },
                 { href: "/methodology", label: "Methodology" },
                 { href: "/admin", label: "Educator Portal" },

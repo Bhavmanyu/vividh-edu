@@ -6,9 +6,9 @@ import { usePlatformStats } from "@/hooks/useData";
 export function StatsBar() {
   const { stats, isLoading } = usePlatformStats();
 
-  const programsIndexed   = stats?.programs_indexed      ?? 15;
-  const dataPoints        = stats?.data_points_collected ?? 4280;
-  const medianRoi         = stats?.median_roi_pct        ?? 187;
+  const programsIndexed   = stats?.programs_indexed      ?? null;
+  const dataPoints        = stats?.data_points_collected ?? null;
+  const medianRoi         = stats?.median_roi_pct        ?? null;
   const lastUpdated       = stats?.last_updated;
   const isLive            = stats?._source === "database";
 
@@ -43,17 +43,19 @@ export function StatsBar() {
             <Activity size={11} />
             <span style={{ fontSize: 11, letterSpacing: "0.02em" }}>
               <span className="font-mono font-semibold" style={{ color: "#8B8BA7" }}>
-                {isLoading ? "—" : programsIndexed.toLocaleString()}
+                {isLoading ? "—" : programsIndexed !== null ? programsIndexed.toLocaleString() : "—"}
               </span>{" "}
               programs indexed ·{" "}
               <span className="font-mono font-semibold" style={{ color: "#8B8BA7" }}>
-                {isLoading ? "—" : dataPoints >= 1_000_000
-                  ? `${(dataPoints / 1_000_000).toFixed(2)}M`
-                  : dataPoints.toLocaleString()}
+                {isLoading ? "—" : dataPoints !== null
+                  ? dataPoints >= 1_000_000
+                    ? `${(dataPoints / 1_000_000).toFixed(2)}M`
+                    : dataPoints.toLocaleString()
+                  : "—"}
               </span>{" "}
               data points ·{" "}
               <span className="font-mono font-semibold" style={{ color: "#8B8BA7" }}>
-                {isLoading ? "—" : `${medianRoi}`}
+                {isLoading ? "—" : medianRoi !== null ? `${medianRoi}` : "—"}
               </span>{" "}
               median ROI score
               {/* Live / seed indicator */}
@@ -78,8 +80,8 @@ export function StatsBar() {
           </div>
           <div className="flex items-center gap-2">
             <span className="pulse-dot" />
-            <span style={{ color: "#22C55E", fontSize: 11, fontWeight: 600 }}>
-              {lastUpdatedLabel ? `Last updated ${lastUpdatedLabel}` : "Live pipeline active"}
+            <span style={{ color: isLive ? "#22C55E" : "#F59E0B", fontSize: 11, fontWeight: 600 }}>
+              {lastUpdatedLabel ? `Updated ${lastUpdatedLabel}` : isLive ? "Live data" : "Seed data — connecting to DB"}
             </span>
           </div>
         </div>

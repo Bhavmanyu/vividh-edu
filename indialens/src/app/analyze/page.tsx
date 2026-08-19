@@ -229,7 +229,7 @@ function RadioGroup({ options, value, onChange }: {
 }
 
 // ── Section components ─────────────────────────────────────────────
-function Section1({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section1({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
@@ -238,26 +238,30 @@ function Section1({ data, update }: { data: IntakeFormData; update: (k: string, 
           <input
             className="form-input"
             type="number"
-            min={40}
+            min={0}
             max={100}
             step={0.1}
             placeholder="e.g. 92.5"
             value={data.tenth_pct}
             onChange={(e) => update("tenth_pct", e.target.value)}
+            style={errors.tenth_pct ? { borderColor: "#EF4444" } : {}}
           />
+          {errors.tenth_pct && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.tenth_pct}</p>}
         </div>
         <div>
           <label className="form-label">12th Percentage</label>
           <input
             className="form-input"
             type="number"
-            min={40}
+            min={0}
             max={100}
             step={0.1}
             placeholder="e.g. 88.0"
             value={data.twelfth_pct}
             onChange={(e) => update("twelfth_pct", e.target.value)}
+            style={errors.twelfth_pct ? { borderColor: "#EF4444" } : {}}
           />
+          {errors.twelfth_pct && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.twelfth_pct}</p>}
         </div>
       </div>
 
@@ -267,7 +271,7 @@ function Section1({ data, update }: { data: IntakeFormData; update: (k: string, 
           className="form-input form-select"
           value={data.twelfth_stream}
           onChange={(e) => update("twelfth_stream", e.target.value)}
-          style={{ background: "#0A0A0F" }}
+          style={{ background: "#0A0A0F", ...(errors.twelfth_stream ? { borderColor: "#EF4444" } : {}) }}
         >
           <option value="">Select stream...</option>
           <option>Science (PCM)</option>
@@ -277,6 +281,7 @@ function Section1({ data, update }: { data: IntakeFormData; update: (k: string, 
           <option>Arts / Humanities</option>
           <option>Vocational</option>
         </select>
+        {errors.twelfth_stream && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.twelfth_stream}</p>}
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -285,20 +290,28 @@ function Section1({ data, update }: { data: IntakeFormData; update: (k: string, 
           <input
             className="form-input"
             type="number"
+            min={1}
+            max={250000}
             placeholder="All India rank"
             value={data.jee_rank}
             onChange={(e) => update("jee_rank", e.target.value)}
+            style={errors.jee_rank ? { borderColor: "#EF4444" } : {}}
           />
+          {errors.jee_rank && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.jee_rank}</p>}
         </div>
         <div>
           <label className="form-label">NEET Score (optional)</label>
           <input
             className="form-input"
             type="number"
+            min={0}
+            max={720}
             placeholder="Out of 720"
             value={data.neet_score}
             onChange={(e) => update("neet_score", e.target.value)}
+            style={errors.neet_score ? { borderColor: "#EF4444" } : {}}
           />
+          {errors.neet_score && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.neet_score}</p>}
         </div>
       </div>
 
@@ -333,7 +346,7 @@ function Section1({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section2({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section2({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   return (
     <div className="space-y-5">
       <div>
@@ -349,6 +362,7 @@ function Section2({ data, update }: { data: IntakeFormData; update: (k: string, 
             { value: "30L+", label: "Above ₹30 Lakh / year" },
           ]}
         />
+        {errors.family_income && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.family_income}</p>}
       </div>
 
       <div>
@@ -400,7 +414,7 @@ function Section2({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section3({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section3({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   return (
     <div className="space-y-5">
       <div>
@@ -409,13 +423,14 @@ function Section3({ data, update }: { data: IntakeFormData; update: (k: string, 
           className="form-input form-select"
           value={data.home_state}
           onChange={(e) => update("home_state", e.target.value)}
-          style={{ background: "#0A0A0F" }}
+          style={{ background: "#0A0A0F", ...(errors.home_state ? { borderColor: "#EF4444" } : {}) }}
         >
           <option value="">Select your state...</option>
           {INDIAN_STATES.map((s) => (
             <option key={s}>{s}</option>
           ))}
         </select>
+        {errors.home_state && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.home_state}</p>}
       </div>
 
       <div>
@@ -459,7 +474,7 @@ function Section3({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section4({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section4({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   const GOALS = ["High Salary", "Job Stability", "Social Impact", "Prestige", "Creative Freedom", "Entrepreneurship"];
 
   return (
@@ -471,6 +486,7 @@ function Section4({ data, update }: { data: IntakeFormData; update: (k: string, 
           value={data.primary_goals}
           onChange={(v) => update("primary_goals", v)}
         />
+        {errors.primary_goals && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.primary_goals}</p>}
       </div>
 
       <Slider
@@ -516,7 +532,7 @@ function Section4({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section5({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section5({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors?: ValidationErrors }) {
   const levels = ["none", "school", "district", "state/national", "international"];
   const levels2 = ["none", "hobby", "trained", "performed publicly"];
   const codingLevels = ["none", "1-2 personal projects", "hackathon wins", "open source contributions"];
@@ -566,7 +582,7 @@ function Section5({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section6({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section6({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors?: ValidationErrors }) {
   const questions = [
     {
       key: "p_q1",
@@ -618,7 +634,7 @@ function Section6({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section7({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section7({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   return (
     <div className="space-y-5">
       <div>
@@ -628,6 +644,7 @@ function Section7({ data, update }: { data: IntakeFormData; update: (k: string, 
           value={data.fields_of_interest}
           onChange={(v) => update("fields_of_interest", v)}
         />
+        {errors.fields_of_interest && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.fields_of_interest}</p>}
       </div>
 
       <div>
@@ -657,7 +674,7 @@ function Section7({ data, update }: { data: IntakeFormData; update: (k: string, 
   );
 }
 
-function Section8({ data, update }: { data: IntakeFormData; update: (k: string, v: unknown) => void }) {
+function Section8({ data, update, errors }: { data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }) {
   return (
     <div className="space-y-5">
       <div>
@@ -668,10 +685,11 @@ function Section8({ data, update }: { data: IntakeFormData; update: (k: string, 
           placeholder="Be specific — role, company type, lifestyle, income target, geography..."
           value={data.future_vision}
           onChange={(e) => update("future_vision", e.target.value)}
-          style={{ resize: "vertical" }}
+          style={{ resize: "vertical", ...(errors.future_vision ? { borderColor: "#EF4444" } : {}) }}
         />
+        {errors.future_vision && <p style={{ color: "#EF4444", fontSize: 11, marginTop: 4 }}>{errors.future_vision}</p>}
         <p style={{ fontSize: 11, color: "#4A4A6A", marginTop: 4 }}>
-          Claude will parse this into structured aspiration tags for the model.
+          Our model will use this to personalise your recommendations.
         </p>
       </div>
 
@@ -717,20 +735,97 @@ function Section8({ data, update }: { data: IntakeFormData; update: (k: string, 
 // ── Loading messages ───────────────────────────────────────────────
 const LOADING_MESSAGES = [
   "Parsing your academic profile...",
-  "Scanning 847 college-degree programs...",
+  "Scanning college-degree programs...",
   "Running ROI formula across 6 dimensions...",
   "Computing 20-year salary trajectories...",
   "Assessing AI automation risk for your fields...",
-  "Matching with 4,291 similar student profiles...",
+  "Matching your profile against the index...",
   "Generating personalized risk dashboard...",
   "Calibrating confidence intervals...",
   "Compiling your report...",
 ];
 
+// ── Per-section validation ─────────────────────────────────────────
+type ValidationErrors = Record<string, string>;
+
+function validateSection(section: number, data: IntakeFormData): ValidationErrors {
+  const errors: ValidationErrors = {};
+
+  if (section === 1) {
+    const tenth = parseFloat(data.tenth_pct);
+    if (!data.tenth_pct) {
+      errors.tenth_pct = "10th percentage is required.";
+    } else if (isNaN(tenth) || tenth < 0 || tenth > 100) {
+      errors.tenth_pct = "Must be a number between 0 and 100.";
+    }
+
+    const twelfth = parseFloat(data.twelfth_pct);
+    if (!data.twelfth_pct) {
+      errors.twelfth_pct = "12th percentage is required.";
+    } else if (isNaN(twelfth) || twelfth < 0 || twelfth > 100) {
+      errors.twelfth_pct = "Must be a number between 0 and 100.";
+    }
+
+    if (!data.twelfth_stream) {
+      errors.twelfth_stream = "Please select your 12th stream.";
+    }
+
+    if (data.neet_score) {
+      const neet = parseFloat(data.neet_score);
+      if (isNaN(neet) || neet < 0 || neet > 720) {
+        errors.neet_score = "NEET score must be between 0 and 720.";
+      }
+    }
+
+    if (data.jee_rank) {
+      const jee = parseInt(data.jee_rank);
+      if (isNaN(jee) || jee < 1 || jee > 250000) {
+        errors.jee_rank = "JEE rank must be between 1 and 2,50,000.";
+      }
+    }
+  }
+
+  if (section === 2) {
+    if (!data.family_income) {
+      errors.family_income = "Please select your family income range.";
+    }
+  }
+
+  if (section === 3) {
+    if (!data.home_state) {
+      errors.home_state = "Please select your home state.";
+    }
+  }
+
+  if (section === 4) {
+    if (data.primary_goals.length === 0) {
+      errors.primary_goals = "Select at least one goal.";
+    }
+  }
+
+  if (section === 7) {
+    if (data.fields_of_interest.length === 0) {
+      errors.fields_of_interest = "Select at least one field you are considering.";
+    }
+  }
+
+  if (section === 8) {
+    if (data.future_vision.trim().length < 20) {
+      errors.future_vision = "Please describe your vision in at least 20 characters.";
+    }
+    if (!data.preferred_work_structure) {
+      errors.preferred_work_structure = "Please select a preferred work structure.";
+    }
+  }
+
+  return errors;
+}
+
 // ── Main wizard ────────────────────────────────────────────────────
 export default function AnalyzePage() {
   const [section, setSection] = useState(1);
   const [data, setData] = useState<IntakeFormData>(INITIAL_DATA);
+  const [errors, setErrors] = useState<ValidationErrors>({});
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [completedToken, setCompletedToken] = useState<string | null>(null);
@@ -747,6 +842,8 @@ export default function AnalyzePage() {
 
   const update = (key: string, value: unknown) => {
     setData((prev) => ({ ...prev, [key]: value }));
+    // Clear error for this field when user corrects it
+    setErrors((prev) => { const e = { ...prev }; delete e[key]; return e; });
   };
 
   const handleSubmit = async () => {
@@ -988,7 +1085,15 @@ export default function AnalyzePage() {
 
           {section < 8 ? (
             <button
-              onClick={() => setSection((v) => v + 1)}
+              onClick={() => {
+                const sectionErrors = validateSection(section, data);
+                if (Object.keys(sectionErrors).length > 0) {
+                  setErrors(sectionErrors);
+                  return;
+                }
+                setErrors({});
+                setSection((v) => v + 1);
+              }}
               className="btn-primary"
             >
               Continue
@@ -996,7 +1101,15 @@ export default function AnalyzePage() {
             </button>
           ) : (
             <button
-              onClick={handleSubmit}
+              onClick={() => {
+                const sectionErrors = validateSection(section, data);
+                if (Object.keys(sectionErrors).length > 0) {
+                  setErrors(sectionErrors);
+                  return;
+                }
+                setErrors({});
+                handleSubmit();
+              }}
               className="btn-primary"
               style={{ background: "#22C55E", fontSize: 15, padding: "13px 28px" }}
             >

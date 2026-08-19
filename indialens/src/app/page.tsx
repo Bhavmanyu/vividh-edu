@@ -61,13 +61,13 @@ export default function LandingPage() {
             >
               <span className="badge badge-blue">
                 <span className="pulse-dot" style={{ width: 5, height: 5 }} />
-                BETA — Week 1 Build
+                BETA
               </span>
               <span
                 className="text-xs font-mono"
                 style={{ color: "#4A4A6A" }}
               >
-                v1.0-seed · {PLATFORM_STATS.collegesTracked} colleges indexed
+                v1.0 · {PLATFORM_STATS.collegesTracked} colleges indexed
               </span>
             </div>
 
@@ -106,7 +106,7 @@ export default function LandingPage() {
               India&apos;s first quantitative education intelligence platform.
               ROI scores, salary trajectories, and AI automation risk for every
               major college × degree combination.{" "}
-              <span style={{ color: "#F0F0F5" }}>Updated weekly.</span>
+              <span style={{ color: "#F0F0F5" }}>Data verified and updated continuously.</span>
             </p>
 
             {/* CTAs */}
@@ -134,8 +134,8 @@ export default function LandingPage() {
               }}
             >
               {[
-                { value: "847", label: "Colleges tracked" },
-                { value: "1.24M", label: "Data points" },
+                { value: "55", label: "Colleges indexed" },
+                { value: "73", label: "Programs tracked" },
                 { value: "6", label: "ROI components" },
                 { value: "Free", label: "Always" },
               ].map((stat) => (
@@ -184,7 +184,7 @@ export default function LandingPage() {
                 fontWeight: 600,
               }}
             >
-              See all 847 colleges
+              Browse the Index
               <ChevronRight size={14} />
             </Link>
           </div>
