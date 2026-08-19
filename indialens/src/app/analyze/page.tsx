@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -748,8 +750,9 @@ const LOADING_MESSAGES = [
 // ── Per-section validation ─────────────────────────────────────────
 type ValidationErrors = Record<string, string>;
 
-function validateSection(section: number, data: IntakeFormData): ValidationErrors {
+function validateSection(section: number, data?: IntakeFormData): ValidationErrors {
   const errors: ValidationErrors = {};
+  if (!data) return errors;
 
   if (section === 1) {
     const tenth = parseFloat(data.tenth_pct);
@@ -878,7 +881,7 @@ export default function AnalyzePage() {
     }
   };
 
-  const SECTION_COMPONENTS: Record<number, React.FC<{ data: IntakeFormData; update: (k: string, v: unknown) => void }>> = {
+  const SECTION_COMPONENTS: Record<number, React.FC<{ data: IntakeFormData; update: (k: string, v: unknown) => void; errors: ValidationErrors }>> = {
     1: Section1, 2: Section2, 3: Section3, 4: Section4,
     5: Section5, 6: Section6, 7: Section7, 8: Section8,
   };
@@ -1066,7 +1069,7 @@ export default function AnalyzePage() {
             </div>
           </div>
 
-          <CurrentSection data={data} update={update} />
+          <CurrentSection data={data} update={update} errors={errors} />
         </div>
 
         {/* Navigation */}
